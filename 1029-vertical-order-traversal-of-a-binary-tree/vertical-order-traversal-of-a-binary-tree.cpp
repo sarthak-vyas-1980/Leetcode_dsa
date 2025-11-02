@@ -35,12 +35,19 @@ public:
                 q.push({frontNode->right,{hd+1,lvl+1}});
             }
         }
-        for (auto const& [hd, level_map] : nodes) {
+        // for (auto const& [hd, level_map] : nodes) {
+        //     vector<int> col_nodes;
+        //         for (auto const& [level, val_multiset] : level_map) {
+        //         // Append all sorted values from the multiset
+        //             col_nodes.insert(col_nodes.end(), val_multiset.begin(), val_multiset.end());
+        //         }
+        //     ans.push_back(col_nodes);
+        // }
+        for(auto i: nodes){
             vector<int> col_nodes;
-                for (auto const& [level, val_multiset] : level_map) {
-                // Append all sorted values from the multiset
-                    col_nodes.insert(col_nodes.end(), val_multiset.begin(), val_multiset.end());
-                }
+            for(auto [level, val_multiset]: i.second){
+                col_nodes.insert(col_nodes.end(), val_multiset.begin(), val_multiset.end());
+            }
             ans.push_back(col_nodes);
         }
         return ans;
