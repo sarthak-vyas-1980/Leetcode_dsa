@@ -29,20 +29,20 @@ public:
         temp->next = temp->next->next;
         return head;
     }
-    // ListNode* removeNthFromEnd(ListNode* head, int n) {
-    //     if(!head->next) return NULL;
-    //     ListNode* prev = NULL;
-    //     ListNode* temp = head;
-    //     int i=0;
-    //     while(temp!=NULL){
-    //         if(i==n){
-    //             prev = head;
-    //         }
-    //         i++;
-    //         temp = temp->next;
-    //         if(prev && i!=n+1) prev = prev->next;
+    // public ListNode removeNthFromEnd(ListNode head, int n) {
+    //     ListNode dummy = new ListNode(0);
+    //     dummy.next = head;
+    //     ListNode slow = dummy;
+    //     ListNode fast = dummy;
+    //     for(int i = 0;i < n;i++){
+    //         fast = fast.next;
     //     }
-    //     prev->next = prev->next->next;
-    //     return head;
+
+    //     while(fast.next != null){
+    //         slow = slow.next;
+    //         fast = fast.next;
+    //     }
+    //     slow.next = slow.next.next;
+    //     return dummy.next;
     // }
 };
