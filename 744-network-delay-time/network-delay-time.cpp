@@ -19,8 +19,8 @@ public:
             int distance = temp.first;
             for(auto i: adj[node]){
                 if(distance+i.second < dist[i.first]){
-                    auto record = st.find({dist[i.first],i.first});
-                    if(record!=st.end()) st.erase(record);
+                    // auto record = st.find({dist[i.first],i.first});
+                    // if(record!=st.end()) st.erase(record);
                     dist[i.first] = distance + i.second;
                     st.insert({dist[i.first],i.first});
 
