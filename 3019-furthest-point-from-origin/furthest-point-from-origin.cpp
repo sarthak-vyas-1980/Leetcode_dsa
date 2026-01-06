@@ -9,8 +9,9 @@ public:
             else if(moves[i]=='L') lcount++;
             else blank++;
         }
-        if(lcount < rcount) return (blank + rcount - lcount);
-        else if(lcount > rcount) return (blank + lcount - rcount);
-        else return blank;
+        // if(lcount < rcount) return (blank + rcount - lcount);
+        // else if(lcount > rcount) return (blank + lcount - rcount);
+        // else return blank;
+        return blank + abs(rcount - lcount);
     }
 };
