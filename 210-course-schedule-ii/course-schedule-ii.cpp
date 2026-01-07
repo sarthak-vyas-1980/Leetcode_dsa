@@ -13,7 +13,6 @@ public:
                 inedge[j]++;
             }
         }
-        int count = 0;
         queue<int> q;
         vector<int> ans;
         vector<int> dummy;
@@ -23,14 +22,12 @@ public:
         while(!q.empty()){
             int front = q.front();
             q.pop();
-            count++;
             ans.push_back(front);
             for(auto i: adj[front]){
                 inedge[i]--;
                 if(inedge[i]==0) q.push(i);
             }
         }
-        if(count == numCourses) return ans;
-        return dummy;
+        return (ans.size()==numCourses ? ans : dummy);
     }
 };
