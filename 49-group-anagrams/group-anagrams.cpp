@@ -14,11 +14,7 @@ public:
             map[strs[i]].push_back(s1);
         }
         for(auto i: map){
-            vector<string> path;
-            for(auto j: i.second){
-                path.push_back(j);
-            }
-            ans.push_back(path);
+            ans.push_back(i.second);
         }
         return ans; 
     }
