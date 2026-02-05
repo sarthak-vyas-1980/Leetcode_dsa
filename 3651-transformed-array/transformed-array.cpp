@@ -15,9 +15,6 @@ public:
                 }
                 else result[i] = nums[i-y];
             }
-            // int x = nums[i];
-            // if(i+x<0) result[i] = nums[(n+i+x)%n];
-            // else result[i] = nums[(i+x)%(n)];
         }
         return result;
     }
