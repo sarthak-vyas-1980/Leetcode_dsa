@@ -1,26 +1,43 @@
 class Solution {
 public:
     int uniquePaths(int m, int n){ 
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        dp[m-1][n-1] = 1;
+        vector<int> curr(n, 0);
+        vector<int> next(n, 0);
+        curr[n-1] = 1;
 
         for(int i=m-1; i>=0; i--){
+            if(i!=m-1) fill(curr.begin(), curr.end(), 0);
             for(int j=n-1; j>=0; j--){
-                int right=0, down=0;
                 if(i+1<m){
-                    dp[i][j] += dp[i+1][j];
+                    curr[j] += next[j];
                 }
                 if(j+1<n){
-                    dp[i][j] += dp[i][j+1];
+                    curr[j] += curr[j+1];
                 }
             }
+            next = curr;
         }
-        return dp[0][0];
+        return next[0];
+        //tabulation.........................................................
+        // vector<vector<int>> dp(m, vector<int>(n, 0));
+        // dp[m-1][n-1] = 1;
+
+        // for(int i=m-1; i>=0; i--){
+        //     for(int j=n-1; j>=0; j--){
+        //         if(i+1<m){
+        //             dp[i][j] += dp[i+1][j];
+        //         }
+        //         if(j+1<n){
+        //             dp[i][j] += dp[i][j+1];
+        //         }
+        //     }
+        // }
+        // return dp[0][0];
     }
 };
 // class Solution {
 //     int solve(int m, int n, vector<vector<bool>>& vis){
-//         //memoize it!!!
+//         //memoize it!!!....................................................
 //         if(m==vis.size()-1 && n==vis[0].size()-1) return 1;
 //         if(m<0 || n<0 || m>=vis.size() || n>=vis[0].size()) return 0;
 
