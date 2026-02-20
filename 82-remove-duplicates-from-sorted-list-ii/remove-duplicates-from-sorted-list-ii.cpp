@@ -29,6 +29,8 @@ public:
                 prev = prev->next;
             }
         }
-        return dummyNode->next;
+        head = dummyNode->next;
+        delete dummyNode;
+        return head;
     }
 };
