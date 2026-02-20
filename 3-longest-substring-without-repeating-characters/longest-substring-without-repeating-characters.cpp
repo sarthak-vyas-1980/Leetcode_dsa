@@ -3,24 +3,40 @@ public:
     int lengthOfLongestSubstring(string s) {
         int n = s.length();
         int i=0, j=0;
-        unordered_map<char, int> map;
+        unordered_map<char, int> map;// We'll the store last occurence of each character!
         int ans = INT_MIN;
 
         while(j<n){
-            if(map.count(s[j])){
-                while(s[i] != s[j]){
-                    map.erase(s[i++]);
-                }
-                map.erase(s[i++]);
+            if(map.count(s[j]) && map[s[j]]>=i){
+                i = map[s[j]] + 1;
             }
-            map[s[j]] = 1;
+            map[s[j]] = j;
             ans = max(ans, j-i+1);
             j++;
         }
         return ans==INT_MIN ? 0 : ans;
     }
+    // int lengthOfLongestSubstring(string s){.....................
+    //     int n = s.length();
+    //     int i=0, j=0;
+    //     unordered_map<char, int> map;
+    //     int ans = INT_MIN;
+
+    //     while(j<n){
+    //         if(map.count(s[j])){
+    //             while(s[i] != s[j]){
+    //                 map.erase(s[i++]);
+    //             }
+    //             map.erase(s[i++]);
+    //         }
+    //         map[s[j]] = 1;
+    //         ans = max(ans, j-i+1);
+    //         j++;
+    //     }
+    //     return ans==INT_MIN ? 0 : ans;
+    // }
 };
-// class Solution {
+// class Solution {................................................
 //     bool isPresent(string s, int j, unordered_map<char, int> m){
 //         for(int k=j; k<s.length(); k++){
 //             m[s[k-j]]--;
