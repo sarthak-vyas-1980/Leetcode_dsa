@@ -8,10 +8,8 @@ class Solution {
         while(i <= j){
             char a = (str[j] == '0') ? '1' : '0';
             char b = (str[i] == '0') ? '1' : '0';
-            str[i] = a;
-            str[j] = b;
-            i++;
-            j--;
+            str[i++] = a;
+            str[j--] = b;
         }
         return str;
     }
