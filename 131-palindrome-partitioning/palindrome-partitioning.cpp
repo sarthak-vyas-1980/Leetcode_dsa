@@ -1,5 +1,5 @@
 class Solution {
-    void solve(vector<vector<string>> &ans, vector<string> temp, string s, int i, vector<vector<bool>> dp){
+    void solve(vector<vector<string>> &ans, vector<string>& temp, string s, int i, vector<vector<bool>>& dp){
         if(i >= s.length()){
             ans.push_back(temp);
             return ;
