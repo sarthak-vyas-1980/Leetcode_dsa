@@ -1,5 +1,5 @@
 class Solution {
-    bool solve(int n, unordered_set<int> s){
+    bool solve(int n, unordered_set<int>& s){
         if(n == 1) return true;
         int sum = 0;
         while(n != 0){
