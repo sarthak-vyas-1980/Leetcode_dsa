@@ -18,7 +18,7 @@ class Codec {
         preorder(root->left, traversal);
         preorder(root->right, traversal);
     }
-    TreeNode* constructTree(string data, int& i){
+    TreeNode* constructTree(string& data, int& i){
         if(i>=data.length()) return NULL;
         int j = i;
         while(i<data.length() && data[i]!=' ') i++;
