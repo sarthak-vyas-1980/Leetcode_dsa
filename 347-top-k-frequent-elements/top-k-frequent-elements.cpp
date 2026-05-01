@@ -6,13 +6,21 @@ public:
             mp[nums[i]]++;
         }
 
-        priority_queue<pair<int, int>> pq;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
         for(auto i:mp){
-            pq.push({i.second, i.first});
+            if(k>0){
+                pq.push({i.second, i.first});
+                k--;
+            }
+            else {
+                if(pq.top().first < i.second){
+                    pq.pop();
+                    pq.push({i.second, i.first});
+                }
+            }
         }
         vector<int> ans;
-        while(!pq.empty() && k>0){
-            k--;
+        while(!pq.empty()){
             ans.push_back(pq.top().second);
             pq.pop();
         }
