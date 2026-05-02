@@ -17,7 +17,23 @@ class Solution {
     }
 public:
     int numDecodings(string s) {
-        vector<int> dp(s.length(), -1);
-        return solve(s, s.length() - 1, dp);
+        if(s[0]=='0') return 0;
+        vector<int> dp(s.length()+1, 0);
+        dp[0] = 1;
+        
+        for(int index=1; index<=s.length(); index++){
+            int ways = 0;
+            if (s[index-1] != '0') {
+                ways += dp[index-1];
+            }
+            if (index > 1) {  //index-2 >= 0
+                int num = (s[index - 2] - '0') * 10 + (s[index-1] - '0');
+                if (num >= 10 && num <= 26) {
+                    ways += dp[index-2];
+                }
+            }
+            dp[index] = ways;
+        }
+        return dp[s.length()];
     }
 };
