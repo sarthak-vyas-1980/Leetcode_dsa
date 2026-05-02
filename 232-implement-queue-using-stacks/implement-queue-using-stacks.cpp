@@ -1,47 +1,35 @@
 class MyQueue {
-    stack<int> s1;
-    stack<int> s2;
+    stack<int> input, output;
+    //input contains reversed order of queue from recently added elements
+    //output contains actual order of it but for older elements, so if it empties out -> transfer from input to output
 public:
-    MyQueue() {
-        
-    }
-    
     void push(int x) {
-        while(!s1.empty()){
-            int val = s1.top();
-            s1.pop();
-            s2.push(val);
-        }
-        s2.push(x);
-        while(!s2.empty()){
-            int val = s2.top();
-            s2.pop();
-            s1.push(val);
-        }
+        input.push(x);
     }
-    
+
     int pop() {
-        if(s1.empty()) return -1;
-        int val = s1.top();
-        s1.pop();
+        if (output.empty()) {
+            while (!input.empty()) {
+                output.push(input.top());
+                input.pop();
+            }
+        }
+        int val = output.top();
+        output.pop();
         return val;
     }
-    
+
     int peek() {
-        if(s1.empty()) return -1;
-        return s1.top();
+        if (output.empty()) {
+            while (!input.empty()) {
+                output.push(input.top());
+                input.pop();
+            }
+        }
+        return output.top();
     }
-    
+
     bool empty() {
-        return s1.empty();
+        return input.empty() && output.empty();
     }
 };
-
-/**
- * Your MyQueue object will be instantiated and called as such:
- * MyQueue* obj = new MyQueue();
- * obj->push(x);
- * int param_2 = obj->pop();
- * int param_3 = obj->peek();
- * bool param_4 = obj->empty();
- */
