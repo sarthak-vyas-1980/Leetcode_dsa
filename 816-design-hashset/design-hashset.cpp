@@ -1,33 +1,19 @@
-#include   <list>
 class MyHashSet {
-    list<int> l;
+    vector<bool> mp;
 public:
-    MyHashSet() {
+    MyHashSet(){ 
+        mp = vector<bool>(1000001, 0);
     }
-    
     void add(int key) {
-        if(contains(key)) return ;
-        l.push_back(key);
+        mp[key] = true;
     }
     
     void remove(int key) {
-        auto it = l.begin();
-        while(it != l.end()){
-            if(*it == key){ 
-                l.erase(it);
-                break;
-            }
-            it++;
-        }
+        mp[key] = false;
     }
     
     bool contains(int key) {
-        auto it = l.begin();
-        while(it != l.end()){
-            if(*it == key) return true;
-            it++;
-        }
-        return false;
+        return mp[key];
     }
 };
 
