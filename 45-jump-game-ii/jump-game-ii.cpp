@@ -1,33 +1,15 @@
 class Solution {
-    int solveMem(vector<int>& nums, int index, vector<int>& dp){
-        if(index == nums.size()-1) return 0;
-        if(index >= nums.size()) return INT_MAX;
-        if(dp[index] != -1) return dp[index];
-
-        int ans = INT_MAX;
-        for(int i=1; i<=nums[index]; i++){
-            int jump = solveMem(nums, index+i, dp);
-            if(jump != INT_MAX){
-                ans = min(ans, jump + 1);
-            }
-        }
-        dp[index] = ans;
-        return ans;
-    }
 public:
     int jump(vector<int>& nums) {
-        // vector<int> dp(nums.size()+1, - 1);
-        // return solveMem(nums, 0, dp);
+        int jumps = 0, currEnd = 0, farthest = 0;
 
-        vector<int> dp(nums.size(), INT_MAX);
-        dp[nums.size()-1] = 0;
-
-        for(int index=nums.size()-2; index>=0; index--){
-            for(int i=1; i<=nums[index]; i++){
-                if(i + index >= nums.size() || dp[index + i] == INT_MAX) continue;
-                dp[index] = min(dp[index], dp[index + i] + 1);
+        for(int i=0; i<nums.size()-1; i++){
+            farthest = max(farthest, i + nums[i]);
+            if(i == currEnd){
+                jumps++;
+                currEnd = farthest;
             }
         }
-        return dp[0];
+        return jumps;
     }
 };
