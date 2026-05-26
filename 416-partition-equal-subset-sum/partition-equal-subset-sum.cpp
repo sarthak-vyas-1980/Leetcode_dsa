@@ -17,17 +17,19 @@ public:
         // vector<vector<int>> dp(nums.size()+1, vector<int>(sum+1, -1));
         // return solveMem(nums, sum, 0, 0, dp);
 
-        vector<vector<bool>> dp(nums.size()+1, vector<bool>((sum/2)+1, 0));
-        for(int i=0; i<=nums.size(); i++) dp[i][0] = 1;
+        vector<int> curr((sum/2)+1, 0);
+        vector<int> next((sum/2)+1, 0);
+        next[0] = 1;
 
         for(int index=nums.size()-1; index>=0; index--){
             for(int val=1; val<=sum/2; val++){ 
                 bool take = 0;
-                if(val-nums[index]>=0) take = dp[index+1][val-nums[index]];
-                bool notTake = dp[index+1][val];
-                dp[index][val] = take || notTake;
+                if(val-nums[index]>=0) take = next[val-nums[index]];
+                bool notTake = next[val];
+                curr[val] = take || notTake;
             }
+            next = curr;
         }
-        return dp[0][sum/2];
+        return curr[sum/2];
     }
 };
