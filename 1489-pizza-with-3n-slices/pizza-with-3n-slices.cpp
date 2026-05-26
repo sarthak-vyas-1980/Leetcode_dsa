@@ -14,22 +14,26 @@ public:
         // return max(solveMem(slices, n/3, 0, n-2, dp1), solveMem(slices, n/3, 1, n-1, dp2));
 
         int n = slices.size();
-        vector<vector<int>> dp1(n+2, vector<int>(n+2, 0)), dp2(n+2, vector<int>(n+2, 0));
+        vector<int> prev1(n+2, 0), prev2(n+2, 0), curr1(n+2, 0), curr2(n+2, 0), next1(n+2, 0), next2(n+2, 0);
 
         for(int index=n-2; index>=0; index--){
             for(int k=1; k<=n/3; k++){
-                int take = slices[index] + dp1[index+2][k-1];
-                int notTake = 0 + dp1[index+1][k];
-                dp1[index][k] = max(take, notTake);
+                int take = slices[index] + next1[k-1];
+                int notTake = 0 + curr1[k];
+                prev1[k] = max(take, notTake);
             }
+            next1 = curr1;
+            curr1 = prev1;
         }
         for(int index=n-1; index>=1; index--){
             for(int k=1; k<=n/3; k++){
-                int take = slices[index] + dp2[index+2][k-1];
-                int notTake = 0 + dp2[index+1][k];
-                dp2[index][k] = max(take, notTake);
+                int take = slices[index] + next2[k-1];
+                int notTake = 0 + curr2[k];
+                prev2[k] = max(take, notTake);
             }
+            next2 = curr2;
+            curr2 = prev2;
         }
-        return max(dp1[0][n/3], dp2[1][n/3]);
+        return max(curr1[n/3], curr2[n/3]);
     }
 };
