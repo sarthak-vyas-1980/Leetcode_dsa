@@ -5,26 +5,15 @@ class Solution {
     }
 public:
     int numberOfSpecialChars(string word) {
-        vector<int> lower(26, 0);
-        vector<int> upper(26, 0);
+        set<int> lower, upper;
         int count = 0;
 
         for(int i=0; i<word.length(); i++){
-            if(isLower(word[i])){
-                lower[word[i]-'a'] = 1;
-                if(upper[word[i]-'a'] == 1){
-                    count++;
-                    upper[word[i]-'a'] = -1;
-                } 
-            }
-            else{
-                if(upper[word[i]-'A'] == -1) continue;
-                upper[word[i]-'A'] = 1;
-                if(lower[word[i]-'A'] == 1){
-                    count++;
-                    upper[word[i]-'A'] = -1;
-                } 
-            }
+            if(isLower(word[i])) lower.insert(word[i]);
+            else upper.insert(word[i]+32);
+        }
+        for(char ch: lower){
+            if(upper.count(ch)) count++;
         }
         return count;
     }
