@@ -9,6 +9,29 @@ class Solution {
         }
         return dp[start][end] = ans;
     }
+    int solveTab(vector<int>& arr){
+        int size = arr.size();
+        vector<vector<int>> dp(size+1, vector<int>(size+1, 0));
+        map<pair<int, int>, int> map;
+
+        for(int i=0; i<size; i++){
+            map[{i, i}] = arr[i];
+            for(int j=i+1; j<size; j++){
+                map[{i, j}] = max(arr[j], map[{i, j-1}]);
+            }
+        }
+
+        for(int start=size-1; start>=0; start--){
+            for(int end=start+1; end<size; end++){
+                int ans = INT_MAX;
+                for(int i=start; i<end; i++){
+                    ans = min(ans, map[{start, i}] * map[{i+1, end}] + dp[start][i] + dp[i+1][end]);
+                }
+                dp[start][end] = ans;
+            }
+        }
+        return dp[0][size-1];
+    }
 public:
     int mctFromLeafValues(vector<int>& arr) {
         int size = arr.size();
@@ -21,6 +44,7 @@ public:
                 map[{i, j}] = max(arr[j], map[{i, j-1}]);
             }
         }
-        return solve(arr, map, 0, size-1, dp);
+        // return solve(arr, map, 0, size-1, dp);
+        return solveTab(arr);
     }
 };
