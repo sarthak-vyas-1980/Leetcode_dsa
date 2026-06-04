@@ -15,18 +15,20 @@ public:
         // vector<vector<int>> dp(grid.size(), vector<int>(grid[0].size(), -1));
         // return solve(grid, 0, 0, dp);
 
-        vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
-        dp[n-1][m-1] = grid[n-1][m-1];
+        vector<int> curr(m+1, 0);
+        vector<int> next(m+1, 0);
+        curr[m-1] = grid[n-1][m-1];
 
         for(int i=n-1; i>=0; i--){
             for(int j=m-1; j>=0; j--){
                 if(i==n-1 && j==m-1) continue;
                 int right = INT_MAX, down = INT_MAX;
-                if(i+1 < n) down = grid[i][j] + dp[i+1][j];
-                if(j+1 < m) right = grid[i][j] + dp[i][j+1];
-                dp[i][j] = min(right, down);
+                if(i+1 < n) down = grid[i][j] + next[j];
+                if(j+1 < m) right = grid[i][j] + curr[j+1];
+                curr[j] = min(right, down);
             }
+            next = curr;
         }
-        return dp[0][0];
+        return curr[0];
     }
 };
