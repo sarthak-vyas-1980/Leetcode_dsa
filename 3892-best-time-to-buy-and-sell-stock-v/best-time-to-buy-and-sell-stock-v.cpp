@@ -35,9 +35,11 @@ public:
         // return solve(0, 0, 0, prices, k, dp);
         
         int n = prices.size();
-        vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(2*k+1, vector<long long>(2, 0)));
+        // vector<vector<vector<long long>>> dp(n+1, vector<vector<long long>>(2*k+1, vector<long long>(2, 0)));
+        vector<vector<long long>> curr(2*k+1, vector<long long>(2, 0));
+        vector<vector<long long>> next(2*k+1, vector<long long>(2, 0));
         for(int o=0; o<=2*k; o++){
-            if(o%2 == 1) dp[n][o][0] = dp[n][o][1] = -1e15;
+            if(o%2 == 1) next[o][0] = next[o][1] = -1e15;
         }
 
         for(int index=n-1; index>=0; index--){
@@ -45,28 +47,28 @@ public:
                 for(int isShort=1; isShort>=0; isShort--){
                     long long profit = 0;
                     if(opr%2 == 0) {  //buy and sell both allowed
-                        long long buyKaro = -prices[index] + dp[index+1][opr+1][0];
-                        long long skipKaro = 0 + dp[index+1][opr][0];
-                        long long sellKaro = prices[index] + dp[index+1][opr+1][1];
+                        long long buyKaro = -prices[index] + next[opr+1][0];
+                        long long skipKaro = 0 + next[opr][0];
+                        long long sellKaro = prices[index] + next[opr+1][1];
                         profit = max(buyKaro, max(skipKaro, sellKaro));
                     }
                     else {
                         if(isShort == 0){
-                            long long sellKaro = prices[index] + dp[index+1][opr+1][0];
-                            long long skipKaro = 0 + dp[index+1][opr][0];
+                            long long sellKaro = prices[index] + next[opr+1][0];
+                            long long skipKaro = 0 + next[opr][0];
                             profit = max(sellKaro, skipKaro);
                         }
                         else{
-                            long long buyKaro = -prices[index] + dp[index+1][opr+1][1];
-                            long long skipKaro = 0 + dp[index+1][opr][1];
+                            long long buyKaro = -prices[index] + next[opr+1][1];
+                            long long skipKaro = 0 + next[opr][1];
                             profit = max(buyKaro, skipKaro);
                         }
                     }
-                    dp[index][opr][isShort] = profit;
+                    curr[opr][isShort] = profit;
                 }
             }
+            next = curr;
         }
-
-        return max(dp[0][0][0], dp[0][0][1]);
+        return next[0][0];
     }
 };
