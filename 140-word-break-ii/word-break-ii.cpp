@@ -1,5 +1,5 @@
 class Solution {
-    void solve(string& s, unordered_set<string>& dic, int i, string path, vector<string>& ans){
+    void solve(string& s, unordered_set<string>& dic, int i, string& path, vector<string>& ans){
         if(i == s.length()){
             path.resize(path.size()-1);
             ans.push_back(path);
