@@ -18,7 +18,23 @@ public:
             dic.insert(wordDict[i]);
         }
         
-        vector<int> dp(s.length(), -1);
-        return solve(s, dic, 0, dp);
+        // vector<int> dp(s.length(), -1);
+        // return solve(s, dic, 0, dp);
+
+        vector<int> dp(s.length()+1, 0);
+        dp[s.length()] = 1;
+
+        for(int i=s.length()-1; i>=0; i--){
+            for(int ind=i; ind<s.length(); ind++){
+                string stray = s.substr(i, ind - i + 1);
+                bool ans = false;
+                if(dic.find(stray) != dic.end()) ans = dp[ind+1];
+                if(ans){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[0];
     }
 };
