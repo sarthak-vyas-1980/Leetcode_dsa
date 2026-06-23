@@ -24,7 +24,7 @@ public:
             for(int i=1; i<=100; i++){
                 if(num < i*i) break;
                 else{
-                    ans = min(ans, solve(num - i*i, dp) + 1);
+                    ans = min(ans, dp[num - i*i] + 1);
                 }
             }
             dp[num] = ans;
