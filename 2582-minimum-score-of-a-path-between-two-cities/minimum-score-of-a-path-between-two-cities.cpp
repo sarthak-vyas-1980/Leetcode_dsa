@@ -1,4 +1,13 @@
 class Solution {
+    void dfs(unordered_map<int, list<pair<int, int>>>& map, unordered_map<int, bool>& vis, int& ans, int node){
+        vis[node] = true;
+        for(auto nbr: map[node]){
+            ans = min(ans, nbr.second);
+            if(!vis[nbr.first]){
+                dfs(map, vis, ans, nbr.first);
+            }
+        }
+    }
 public:
     int minScore(int n, vector<vector<int>>& roads) {
         unordered_map<int, list<pair<int, int>>> map;
@@ -10,22 +19,7 @@ public:
             map[road[1]].push_back({road[0], road[2]});
         }
 
-        queue<int> q;
-        q.push(1);
-        vis[1] = true;
-        
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-
-            for(auto i: map[node]){
-                ans = min(ans, i.second);
-                if(!vis[i.first]){
-                    q.push(i.first);
-                    vis[i.first] = true;
-                }
-            }
-        }
+        dfs(map, vis, ans, 1);
         return ans;
     }
 };
