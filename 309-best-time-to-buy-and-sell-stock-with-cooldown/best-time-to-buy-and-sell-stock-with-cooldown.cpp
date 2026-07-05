@@ -27,13 +27,13 @@ public:
             for(int buy = 0; buy<2; buy++){
                 int ans = 0;
                 if(buy){
-                    int buyIt = -prices[index] + solve(prices, index+1, 0, dp);
-                    int ignore = solve(prices, index+1, 1, dp);
+                    int buyIt = -prices[index] + dp[index+1][0];
+                    int ignore = dp[index+1][1];
                     ans = max(buyIt, ignore);
                 }
                 else{
-                    int sellIt = +prices[index] + solve(prices, index+2, 1, dp);
-                    int ignore = solve(prices, index+1, 0, dp);
+                    int sellIt = +prices[index] + dp[index+2][1];
+                    int ignore = dp[index+1][0];
                     ans = max(sellIt, ignore);
                 }
                 dp[index][buy] = ans;
