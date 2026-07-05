@@ -21,24 +21,28 @@ public:
         // vector<vector<int>> dp(prices.size()+1, vector<int>(2, -1));
         // return solve(prices, 0, 1, dp);
 
-        vector<vector<int>> dp(prices.size()+2, vector<int>(2, 0));
+        vector<int> curr(2, 0);
+        vector<int> next(2, 0);
+        vector<int> nextest(2, 0);
 
         for(int index=prices.size()-1; index>=0; index--){
             for(int buy = 0; buy<2; buy++){
                 int ans = 0;
                 if(buy){
-                    int buyIt = -prices[index] + dp[index+1][0];
-                    int ignore = dp[index+1][1];
+                    int buyIt = -prices[index] + next[0];
+                    int ignore = next[1];
                     ans = max(buyIt, ignore);
                 }
                 else{
-                    int sellIt = +prices[index] + dp[index+2][1];
-                    int ignore = dp[index+1][0];
+                    int sellIt = +prices[index] + nextest[1];
+                    int ignore = next[0];
                     ans = max(sellIt, ignore);
                 }
-                dp[index][buy] = ans;
+                curr[buy] = ans;
             }
+            nextest = next;
+            next = curr;
         }
-        return dp[0][1];
+        return curr[1];
     }
 };
