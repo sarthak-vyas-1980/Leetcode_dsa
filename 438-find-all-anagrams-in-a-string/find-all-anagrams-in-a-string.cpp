@@ -9,15 +9,27 @@ public:
             check[c]++;
         }
 
-        while(j < s.length()){  
-            count[s[j++]]++;
-            while(j-i < p.length()){
-                count[s[j++]]++;
+        while(j < s.length()){ 
+            count[s[j]]++; 
+            if(!check.count(s[j])){
+                count.clear();
+                i = j = j + 1;
+                continue;
             }
-            if(count == check) ans.push_back(i);
-            count[s[i]]--;
-            if(count[s[i]] == 0) count.erase(s[i]);
-            i++;
+            else if(count[s[j]] > check[s[j]]){
+                while(count[s[j]] > check[s[j]]){
+                    count[s[i]]--;
+                    if(count[s[i]] == 0) count.erase(s[i]);
+                    i++;
+                }
+            }
+            if(count.size() == check.size() && count == check){
+                ans.push_back(i);
+                count[s[i]]--;
+                if(count[s[i]] == 0) count.erase(s[i]);
+                i++;
+            } 
+            j++;
         }   
         return ans;
     }
