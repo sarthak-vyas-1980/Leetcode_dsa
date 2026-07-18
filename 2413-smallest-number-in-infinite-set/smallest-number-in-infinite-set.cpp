@@ -1,25 +1,27 @@
 class SmallestInfiniteSet {
-    vector<bool> arr;
+    int curr;
     priority_queue<int, vector<int>, greater<int>> pq;
+    unordered_set<int> s;
 public:
     SmallestInfiniteSet() {
-        arr = vector<bool>(1001, 1);
-        for(int i=1; i<=1000; i++){
-            pq.push(i);
-        }
+        curr = 1;
     }
     
     int popSmallest() {
-        int num = pq.top();
-        pq.pop();
-        arr[num] = 0;
-        return num;
+        if(!pq.empty()){
+            int num = pq.top();
+            pq.pop();
+            s.erase(num);
+            return num;
+        }
+        return curr++;
     }
     
     void addBack(int num) {
-        if(arr[num]) return;
-        pq.push(num);
-        arr[num] = 1;
+        if(num < curr && !s.count(num)){
+            pq.push(num);
+            s.insert(num);
+        }
     }
 };
 
