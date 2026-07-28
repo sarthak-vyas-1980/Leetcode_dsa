@@ -12,36 +12,20 @@
 class Solution {
     int ans;
 
-    void check(TreeNode* root, map<pair<TreeNode*, bool>, bool>& vis, bool r){
-        TreeNode* curr;
-        if(r) curr = root->right;
-        else curr = root->left;
-        vis[{root, r}] = true;
-        int count = 0;
-
-        while(curr){
-            count++;
-            r = !r;
-            vis[{curr, r}] = true;
-            if(r) curr = curr->right;
-            else curr = curr->left;
-        } 
-        ans = max(ans, count);
-    }
-
-    void solve(TreeNode* root, map<pair<TreeNode*, bool>, bool>& vis){
+    void solve(TreeNode* root, bool r, int count){
         if(!root) return ;
-        if(root->left && !vis[{root, 0}]) check(root, vis, 0);
-        if(root->right && !vis[{root, 1}]) check(root, vis, 1);
-        
-        solve(root->left, vis); 
-        solve(root->right, vis); 
+        ans = max(ans, count);
+        if(root->left && r) solve(root->left, 0, count + 1);
+        else solve(root->left, 0, 1);
+
+        if(root->right && !r) solve(root->right, 1, count + 1);
+        else solve(root->right, 1, 1);
     }
 public:
     int longestZigZag(TreeNode* root) {
         ans = 0;
-        map<pair<TreeNode*, bool>, bool> vis;
-        solve(root, vis);
+        if(root->left) solve(root->left, 0, 1);
+        if(root->right) solve(root->right, 1, 1);
         return ans;
     }
 };
