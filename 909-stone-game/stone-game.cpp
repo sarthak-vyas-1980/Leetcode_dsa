@@ -1,25 +1,10 @@
 class Solution {
-    int solve(vector<int>& piles, int s, int e, vector<vector<int>>& dp){
-        if(s > e) return 0;
-        if(dp[s][e] != -1) return dp[s][e];
-
-        int ans = 0;
-        if((e - s) & 1){
-            int start = piles[s] + solve(piles, s+1, e, dp);
-            int end = piles[e] + solve(piles, s, e-1, dp);
-            ans = max(start, end);
-        }
-
-        else{
-            int start = -piles[s] + solve(piles, s+1, e, dp);
-            int end = -piles[e] + solve(piles, s, e-1, dp);
-            ans = max(start, end);
-        }
-        return dp[s][e] = ans;
-    }
 public:
     bool stoneGame(vector<int>& piles) {
-        vector<vector<int>> dp(piles.size(), vector<int>(piles.size(), -1));
-        return solve(piles, 0, piles.size()-1, dp) > 0;
+        // Because the piles array has an even length, Alice can always force taking either all even, or all odd indexed piles.
+        // Since Alice always has a choice between the two parities, she can always obtain the parity with the larger total sum.
+        // Consequently, Bob is left with the parity having the smaller total sum.
+        // Since the total number of stones is odd, then one parity has a strictly larger total sum. Therefore, Alice is guaranteed to collect more stones than Bob.
+        return true;
     }
 };
