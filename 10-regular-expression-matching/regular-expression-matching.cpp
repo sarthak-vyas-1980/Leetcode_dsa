@@ -17,22 +17,26 @@ class Solution {
     }
 public:
     bool isMatch(string s, string p) {
-        vector<vector<int>> dp(s.length()+1, vector<int>(p.length()+1, 0));
-        dp[s.length()][p.length()] = true;
+        vector<bool> curr(p.length()+1, 0);
+        vector<bool> next(p.length()+1, 0);
+        next[p.length()] = true;
 
         for(int i=s.length(); i>=0; i--){
+            curr[p.length()] = (i == s.length());
             for(int j=p.length()-1; j>=0; j--){
                 bool match = i<s.length() && (s[i] == p[j] || p[j] == '.');
                 
                 if(j+1<p.length() && p[j+1] == '*'){
                     bool take = false;
-                    if(match) take = dp[i+1][j];
-                    bool notTake = dp[i][j+2];
-                    dp[i][j] = take || notTake;
+                    if(match) take = next[j];
+                    bool notTake = curr[j+2];
+                    curr[j] = take || notTake;
                 }
-                else if(match) dp[i][j ]= dp[i+1][j+1];
+                else if(match) curr[j] = next[j+1];
+                else curr[j] = false;
             }
+            next = curr;
         }
-        return dp[0][0];
+        return next[0];
     }
 };
